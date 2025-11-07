@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Monitor</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+  #current { font-size: 2em; color: green; }
+</style>
+</head>
+<body>
+<h1>Hall Effect Current Sensor</h1>
+<p>Current: <span id="current">0</span> A</p>
+
+<script>
+async function fetchCurrent() {
+  try {
+    const response = await fetch('/current'); // replace with your microcontroller IP/endpoint
+    const data = await response.text();
+    document.getElementById('current').textContent = parseFloat(data).toFixed(2);
+  } catch (err) {
+    console.error('Error fetching current:', err);
+  }
+}
+
+// Update every 500ms
+setInterval(fetchCurrent, 500);
+</script>
+</body>
+</html>
